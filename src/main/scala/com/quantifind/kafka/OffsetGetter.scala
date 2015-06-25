@@ -211,7 +211,7 @@ class OffsetGetter(zkClient: ZkClient) extends Logging {
       ZkUtils.getChildren(zkClient, ZkUtils.ConsumersPath).flatMap {
         group =>
           try {
-            ZkUtils.getConsumersPerTopic(zkClient, group).keySet.map {
+            ZkUtils.getConsumersPerTopic(zkClient, group, false).keySet.map {
               key =>
                 key -> group
             }
@@ -262,7 +262,7 @@ class OffsetGetter(zkClient: ZkClient) extends Logging {
 
   def getClusterViz: Node = {
     val clusterNodes = ZkUtils.getAllBrokersInCluster(zkClient).map((broker) => {
-      Node(broker.getConnectionString(), Seq())
+      Node(broker.connectionString, Seq())
     })
     Node("KafkaCluster", clusterNodes)
   }

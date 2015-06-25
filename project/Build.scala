@@ -1,11 +1,13 @@
 import sbt._
 import Keys._
-import sbtassembly.Plugin._
-import AssemblyKeys._
+import sbtassembly.AssemblyPlugin.autoImport._
+import com.typesafe.sbt.SbtNativePackager.autoImport._
+//import com.typesafe.sbt.packager.debian.DebianPlugin.autoImport._
+
 
 object KafkaUtilsBuild extends Build {
 
-  def sharedSettings = Defaults.defaultSettings ++ assemblySettings ++ Seq(
+  def sharedSettings = Seq(
     version := "0.3.0-SNAPSHOT",
     scalaVersion := "2.10.3",
     organization := "com.quantifind",
@@ -21,15 +23,11 @@ object KafkaUtilsBuild extends Build {
     libraryDependencies ++= Seq(
       "log4j" % "log4j" % "1.2.17",
       "org.scalatest" %% "scalatest" % "1.9.1" % "test",
-      "org.apache.kafka" %% "kafka" % "0.8.1"))
+      "org.apache.kafka" %% "kafka" % "0.8.2.1"))
 
   val slf4jVersion = "1.6.1"
 
-  //offsetmonitor project
-
-  lazy val offsetmonitor = Project("offsetmonitor", file("."), settings = offsetmonSettings)
-
-  def offsetmonSettings = sharedSettings ++ Seq(
+  def offsetmonSettings = Seq(
     name := "KafkaOffsetMonitor",
     libraryDependencies ++= Seq(
       "net.databinder" %% "unfiltered-filter" % "0.8.4",
@@ -42,4 +40,17 @@ object KafkaUtilsBuild extends Build {
     resolvers ++= Seq(
       "java m2" at "http://download.java.net/maven/2",
       "twitter repo" at "http://maven.twttr.com"))
+
+  //offsetmonitor project
+
+  //lazy val offsetmonitor = Project("offsetmonitor", file("."), settings = offsetmonSettings)
+
+  lazy val offsetmonitor = (project in file(".")).
+    enablePlugins(com.typesafe.sbt.packager.debian.DebianPlugin).
+    settings(sharedSettings: _*).
+    settings(offsetmonSettings: _*)
 }
+
+
+
+

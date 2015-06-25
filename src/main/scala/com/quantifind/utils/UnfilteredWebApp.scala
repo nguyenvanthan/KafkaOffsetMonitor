@@ -1,6 +1,8 @@
 package com.quantifind.utils
 
 import unfiltered.util.Port
+import unfiltered.jetty.Server
+import unfiltered.filter.Plan
 
 import com.quantifind.sumac.{ArgMain, FieldArgs}
 import com.quantifind.utils.UnfilteredWebApp.Arguments
@@ -15,7 +17,7 @@ trait UnfilteredWebApp[T <: Arguments] extends ArgMain[T] {
 
   def htmlRoot: String
 
-  def setup(args: T): unfiltered.filter.Plan
+  def setup(args: T): Plan
 
   def afterStart() {}
 
@@ -24,9 +26,9 @@ trait UnfilteredWebApp[T <: Arguments] extends ArgMain[T] {
   override def main(parsed: T) {
     val root = getClass.getResource(htmlRoot)
     println("serving resources from: " + root)
-    unfiltered.jetty.Http(parsed.port)
+    Server.http(parsed.port)
       .resources(root) //whatever is not matched by our filter will be served from the resources folder (html, css, ...)
-      .filter(setup(parsed))
+      .plan(setup(parsed))
       .run(_ => afterStart(), _ => afterStop())
   }
 

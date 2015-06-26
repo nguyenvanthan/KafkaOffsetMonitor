@@ -34,7 +34,7 @@ object KafkaUtilsBuild extends Build {
     packageDescription := "Kafka offset monitor web application")
 
   def offsetmonSettings = Seq(
-    name := "KafkaOffsetMonitor",
+    name := "kafka-offset-monitor",
     libraryDependencies ++= Seq(
       "net.databinder" %% "unfiltered-filter" % "0.8.4",
       "net.databinder" %% "unfiltered-jetty" % "0.8.4",

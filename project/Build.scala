@@ -2,8 +2,6 @@ import sbt._
 import Keys._
 import sbtassembly.AssemblyPlugin.autoImport._
 import com.typesafe.sbt.SbtNativePackager.autoImport._
-import com.typesafe.sbt.packager.debian.DebianPlugin.autoImport._
-
 
 
 object KafkaUtilsBuild extends Build {
@@ -13,7 +11,7 @@ object KafkaUtilsBuild extends Build {
     scalaVersion := "2.10.3",
     organization := "com.quantifind",
     scalacOptions := Seq("-deprecation", "-unchecked", "-optimize"),
-    //ls -l tarunmanagedJars in Compile <<= baseDirectory map { base => (base / "lib" ** "*.jar").classpath },
+    unmanagedJars in Compile <<= baseDirectory map { base => (base / "lib" ** "*.jar").classpath },
     retrieveManaged := true,
     transitiveClassifiers in Scope.GlobalScope := Seq("sources"),
     resolvers ++= Seq(
@@ -48,9 +46,6 @@ object KafkaUtilsBuild extends Build {
       "twitter repo" at "http://maven.twttr.com"))
 
   //offsetmonitor project
-
-  //lazy val offsetmonitor = Project("offsetmonitor", file("."), settings = offsetmonSettings)
-
   lazy val offsetmonitor = (project in file(".")).
     enablePlugins(com.typesafe.sbt.packager.debian.DebianPlugin).
     enablePlugins(com.typesafe.sbt.packager.archetypes.JavaServerAppPackaging).

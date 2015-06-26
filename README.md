@@ -51,6 +51,19 @@ The arguments are:
 - **dbName** where to store the history (default 'offsetapp')
 
 
+Generate a debian package
+=========================
+
+Just run the following command :  
+```
+sbt clean debian:package-bin
+
+```
+
+It will generate a file in target/kafka-offset-monitoring_(version).jar
+
+
+
 Contributing
 ============
 

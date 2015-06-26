@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+realpath() {
+  # TODO - The original bash template has a robust mechanism to find the true
+  #        path to your application, following multiple symlinks.
+  #
+}
+
+addJava() {
+  # Here we override the original templates addJava method to do nothing,
+  # since this was how we were adding configuration before.
+}
+
+declare -r real_script_path="$(realpath "$0")"
+
+# We have to provide an app_home for the default bash declarations to work.
+declare -r app_home="$(realpath "$(dirname "$real_script_path")")"
+
+    # The auto-generated classpath relies on this variable existing
+    # and pointing at the lib directory.
+declare -r lib_dir="$(realpath "${app_home}/../lib")"
+
+# This line tells the native packager template engine to inject
+# all of its settings into this spot in the bash file.
+${{template_declares}}
+
+# Here we make use of two of the injected settings for the bash file:
+# * app_classpath - represents the full list of JARs for this application.
+# * app_mainclass - represents the class with a main method we should call.
+exec java -cp $app_classpath $app_mainclass $@

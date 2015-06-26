@@ -2,7 +2,8 @@ import sbt._
 import Keys._
 import sbtassembly.AssemblyPlugin.autoImport._
 import com.typesafe.sbt.SbtNativePackager.autoImport._
-//import com.typesafe.sbt.packager.debian.DebianPlugin.autoImport._
+import com.typesafe.sbt.packager.debian.DebianPlugin.autoImport._
+
 
 
 object KafkaUtilsBuild extends Build {
@@ -12,7 +13,7 @@ object KafkaUtilsBuild extends Build {
     scalaVersion := "2.10.3",
     organization := "com.quantifind",
     scalacOptions := Seq("-deprecation", "-unchecked", "-optimize"),
-    unmanagedJars in Compile <<= baseDirectory map { base => (base / "lib" ** "*.jar").classpath },
+    //ls -l tarunmanagedJars in Compile <<= baseDirectory map { base => (base / "lib" ** "*.jar").classpath },
     retrieveManaged := true,
     transitiveClassifiers in Scope.GlobalScope := Seq("sources"),
     resolvers ++= Seq(
@@ -26,6 +27,11 @@ object KafkaUtilsBuild extends Build {
       "org.apache.kafka" %% "kafka" % "0.8.2.1"))
 
   val slf4jVersion = "1.6.1"
+
+  def debianSettings = Seq(
+    maintainer := "Someone <someone@company.com>",
+    packageSummary := "Kafka offset monitor, fork from https://github.com/quantifind/KafkaOffsetMonitor",
+    packageDescription := "Kafka offset monitor web application")
 
   def offsetmonSettings = Seq(
     name := "KafkaOffsetMonitor",
@@ -47,7 +53,9 @@ object KafkaUtilsBuild extends Build {
 
   lazy val offsetmonitor = (project in file(".")).
     enablePlugins(com.typesafe.sbt.packager.debian.DebianPlugin).
+    enablePlugins(com.typesafe.sbt.packager.archetypes.JavaServerAppPackaging).
     settings(sharedSettings: _*).
+    settings(debianSettings: _*).
     settings(offsetmonSettings: _*)
 }
 

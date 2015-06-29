@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-exec java -cp lib/* \
-            com.quantifind.kafka.offsetapp.OffsetGetterWeb \
-            --zk $ZK_CLUSTER \
-            --port $PORT \
-            --refresh $REFRESH_INTERVAL \
-            --retain $RETAIN_DURATION $@

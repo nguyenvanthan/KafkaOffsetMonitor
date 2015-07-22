@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo 'change owner for /usr/share/kafka-offset-monitor directory'
+
+chown kafka-offset-monitor /usr/share/kafka-offset-monitor

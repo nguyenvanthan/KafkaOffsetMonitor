@@ -2,7 +2,7 @@
 
 # Setting JAVA_OPTS
 # -----------------
-export JAVA_OPTS="-server $JAVA_OPTS"
+export JAVA_OPTS="-server -Dlog4j.configuration=file:conf/log4j.properties $JAVA_OPTS"
 
 # Setting APPLICATION_OPTS
 # -----------------
@@ -17,4 +17,4 @@ java $JAVA_OPTS -cp "lib/*" \
             --zk $ZK_CLUSTER \
             --port $PORT \
             --refresh $REFRESH_INTERVAL \
-            --retain $RETAIN_DURATION
+            --retain $RETAIN_DURATION $@

@@ -89,13 +89,26 @@ Generate a debian package
 
 Just run the following command :  
 ```
-sbt clean debian:package-bin
-
+  sbt clean debian:package-bin
 ```
 
-It will generate a file in target/kafka-offset-monitoring_(version).jar
+It will generate a file in target/kafka-offset-monitoring_(version)_all.deb
 
+Deploy the generated debian package.
 
+```
+  sudo dpkg -i kafka-offset-monitor_*.deb	
+```
+
+This will install all the required files in: __/usr/share/kafka-offset-monitor/__
+
+## Customization
+
+You can customize your logging by modifying the file in : __/usr/share/kafka-offset-monitor/conf/log4j.properties__  
+Then you have to restart with the command:  
+```
+   sudo initctl restart kafka-offset-monitor
+```
 
 Contributing
 ============

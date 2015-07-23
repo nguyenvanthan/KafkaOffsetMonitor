@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
+# source file
+. /etc/default/kafka-offset-monitor
+
 # Setting JAVA_OPTS
 # -----------------
 export JAVA_OPTS="-server -Dlog4j.configuration=file:conf/log4j.properties $JAVA_OPTS"
-
-# Setting APPLICATION_OPTS
-# -----------------
-export ZK_CLUSTER="zookeeper01,zookeeper02,zookeeper03"
-export PORT="9999"
-export REFRESH_INTERVAL="10.seconds"
-export RETAIN_DURATION="7.days"
-
 
 java $JAVA_OPTS -cp "lib/*" \
             com.quantifind.kafka.offsetapp.OffsetGetterWeb \

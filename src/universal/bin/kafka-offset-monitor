@@ -12,4 +12,4 @@ java $JAVA_OPTS -cp "lib/*" \
             --zk $ZK_CLUSTER \
             --port $PORT \
             --refresh $REFRESH_INTERVAL \
-            --retain $RETAIN_DURATION $@
+            --retain $RETAIN_DURATION $EXTRA_ARGS $@

@@ -21,3 +21,7 @@ export ZK_CLUSTER="zookeeper01,zookeeper02,zookeeper03"
 export PORT="9999"
 export REFRESH_INTERVAL="10.seconds"
 export RETAIN_DURATION="7.days"
+export EXTRA_ARGS=""
+
+# example for plugins
+# EXTRA_ARGS="--pluginsArgs graphiteHost=graphite.host,graphitePort=2003,graphitePrefix=stats.kafka.offset_monitor"

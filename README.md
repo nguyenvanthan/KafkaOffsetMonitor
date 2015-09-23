@@ -105,6 +105,28 @@ This will install all the required files in: __/usr/share/kafka-offset-monitor/_
 ## Customization
 
 You can customize your logging by modifying the file in : __/usr/share/kafka-offset-monitor/conf/log4j.properties__  
+
+You can also define some properties in the file : __/etc/default/kafka-offset-monitor__  
+List of customizable variable in :
+
+* ZK_CLUSTER: a zookeeper cluster connection url
+* PORT: on which port the application will run
+* REFRESH_INTERVAL: the refreshing internval
+* RETAIN_DURATION: a retain duration
+
+Example:
+
+```
+    # Setting APPLICATION_OPTS
+    # ------------------------
+
+    export ZK_CLUSTER="{% for host in KAFKA_ZOOKEEPER_CLUSTER %}{{ host.split(':')[0] }}{% if not loop.last %},{% endif %}{% endfor %}"
+    export PORT="9999"
+    export REFRESH_INTERVAL="10.seconds"
+    export RETAIN_DURATION="7.days"
+```
+
+
 Then you have to restart with the command:  
 ```
    sudo initctl restart kafka-offset-monitor

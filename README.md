@@ -142,9 +142,10 @@ You can customize your logging by modifying the file in : __/usr/share/kafka-off
 You can also define some properties in the file : __/etc/default/kafka-offset-monitor__  
 List of customizable variable in :
 
+* APP_CLASSPATH: custom classpath, default to "lib/*"
 * ZK_CLUSTER: a zookeeper cluster connection url
 * PORT: on which port the application will run
-* REFRESH_INTERVAL: the refreshing internval
+* REFRESH_INTERVAL: the refreshing interval
 * RETAIN_DURATION: a retain duration
 
 Example:
@@ -152,8 +153,8 @@ Example:
 ```
     # Setting APPLICATION_OPTS
     # ------------------------
-
-    export ZK_CLUSTER="{% for host in KAFKA_ZOOKEEPER_CLUSTER %}{{ host.split(':')[0] }}{% if not loop.last %},{% endif %}{% endfor %}"
+    export APP_CLASSPATH="lib/*"
+    export ZK_CLUSTER="zookeeper01:2181,zookeeper02:2181,zookeeper03:2181"
     export PORT="9999"
     export REFRESH_INTERVAL="10.seconds"
     export RETAIN_DURATION="7.days"

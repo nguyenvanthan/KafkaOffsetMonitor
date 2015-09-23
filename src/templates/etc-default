@@ -17,6 +17,7 @@
 
 # Setting APPLICATION_OPTS
 # -----------------
+export APP_CLASSPATH="lib/*"
 export ZK_CLUSTER="zookeeper01,zookeeper02,zookeeper03"
 export PORT="9999"
 export REFRESH_INTERVAL="10.seconds"

@@ -7,7 +7,7 @@
 # -----------------
 export JAVA_OPTS="-server -Dlog4j.configuration=file:conf/log4j.properties $JAVA_OPTS"
 
-java $JAVA_OPTS -cp "lib/*" \
+java $JAVA_OPTS -cp $APP_CLASSPATH \
             com.quantifind.kafka.offsetapp.OffsetGetterWeb \
             --zk $ZK_CLUSTER \
             --port $PORT \
